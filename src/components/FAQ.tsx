@@ -35,9 +35,9 @@ export default function FAQ() {
             return (
               <div
                 key={faq.id}
-                className={`border rounded-[20px] overflow-hidden bg-white transition-all duration-300 shadow-premium ${
-                  isOpen ? 'border-aura-accent bg-white' : 'border-aura-border hover:border-aura-accent/30'
-                }`}
+                                 className={`relative border rounded-[20px] overflow-hidden bg-white transition-all duration-[250ms] ease-out shadow-sm transform-gpu motion-safe:hover:scale-[1.02] hover:z-10 hover:shadow-[0_4px_12px_rgba(168,107,115,0.15),0_0_8px_rgba(168,107,115,0.25)] motion-reduce:transition-none ${
+                   isOpen ? 'border-aura-accent bg-white hover:border-aura-accent' : 'border-aura-border hover:border-aura-accent/60'
+                 }`}
               >
                 {/* Header/Trigger Accordion */}
                 <button

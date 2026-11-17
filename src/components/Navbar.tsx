@@ -86,11 +86,11 @@ export default function Navbar() {
                 key={item.name}
                 href={item.href}
                 onClick={(e) => handleNavClick(e, item.href)}
-                className={`text-sm font-medium tracking-widest uppercase transition-colors relative py-1 ${
+                className={`text-sm font-medium tracking-widest uppercase transition-colors relative py-1 group ${
                   activeSection === item.href
                     ? 'text-aura-accent font-semibold'
                     : 'text-aura-text/80 hover:text-aura-accent'
-                }`}
+                } after:content-[''] after:absolute after:left-0 after:-bottom-0.5 after:h-[2px] after:w-0 after:bg-aura-accent after:transition-all after:duration-250 after:ease-out hover:after:w-full motion-reduce:transition-none`}
               >
                 {item.name}
                 {activeSection === item.href && (

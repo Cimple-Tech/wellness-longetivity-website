@@ -349,7 +349,7 @@ export default function Contact() {
                           setCategory(e.target.value);
                           setService(''); // Reset service selection when category changes
                         }}
-                        className="w-full bg-aura-bg/50 border border-aura-border rounded-xl px-4 py-3 text-sm text-aura-text outline-none focus:border-aura-accent focus:bg-white transition-all cursor-pointer"
+                        className="relative w-full bg-aura-bg/50 border border-aura-border rounded-xl px-4 py-3 pr-8 text-sm text-aura-text outline-none focus:border-aura-accent focus:bg-white transition-all duration-300 ease-out hover:scale-[1.02] hover:border-aura-accent hover:shadow-[0_0_8px_rgba(168,107,115,0.4)] motion-reduce:transition-none cursor-pointer appearance-none after:content-[''] after:absolute after:right-3 after:top-1/2 after:-translate-y-1/2 after:w-2 after:h-2 after:border-t-2 after:border-r-2 after:border-aura-text after:rotate-45"
                         required
                       >
                         <option value="">Choose a category...</option>
@@ -368,7 +368,7 @@ export default function Contact() {
                         id="booking-service"
                         value={service}
                         onChange={(e) => setService(e.target.value)}
-                        className={`w-full bg-aura-bg/50 border border-aura-border rounded-xl px-4 py-3 text-sm text-aura-text outline-none focus:border-aura-accent focus:bg-white transition-all cursor-pointer ${
+                        className={`w-full bg-aura-bg/50 border border-aura-border rounded-xl px-4 py-3 text-sm text-aura-text outline-none focus:border-aura-accent focus:bg-white transition-all duration-300 ease-out hover:scale-[1.02] hover:border-aura-accent hover:shadow-[0_0_8px_rgba(168,107,115,0.4)] motion-reduce:transition-none cursor-pointer ${
                           !category ? 'opacity-50 cursor-not-allowed' : ''
                         }`}
                         disabled={!category}
@@ -477,7 +477,7 @@ export default function Contact() {
                           value={date}
                           min={getTodayDateString()}
                           onChange={(e) => handleDateChange(e.target.value)}
-                          className="w-full bg-aura-bg/50 border border-aura-border rounded-xl px-4 py-3 text-sm text-aura-text outline-none focus:border-aura-accent focus:bg-white transition-all cursor-pointer"
+                          className="relative w-full bg-aura-bg/50 border border-aura-border rounded-xl px-4 py-3 pr-8 text-sm text-aura-text outline-none focus:border-aura-accent focus:bg-white transition-all duration-300 ease-out hover:scale-[1.02] hover:border-aura-accent hover:shadow-[0_0_8px_rgba(168,107,115,0.4)] motion-reduce:transition-none cursor-pointer appearance-none after:content-[''] after:absolute after:right-3 after:top-1/2 after:-translate-y-1/2 after:w-2 after:h-2 after:border-t-2 after:border-r-2 after:border-aura-text after:rotate-45"
                           required
                         />
                         {date && (

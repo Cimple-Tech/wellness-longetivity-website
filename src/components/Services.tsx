@@ -53,7 +53,7 @@ export default function Services() {
               className={`px-5 py-2.5 rounded-full text-xs font-medium uppercase tracking-widest transition-all duration-300 ${
                 activeCategory === category.id
                   ? 'bg-aura-accent text-white shadow-sm'
-                  : 'bg-white border border-aura-border text-aura-text hover:border-aura-accent/40'
+                  : 'bg-white border border-aura-border text-aura-text hover:bg-aura-accent hover:text-white hover:shadow-[0_0_8px_rgba(168,107,115,0.4)] hover:scale-[1.03] motion-reduce:transition-none'
               }`}
             >
               {category.name}
