@@ -1,7 +1,8 @@
 'use client';
 
-import { motion } from 'framer-motion';
+import { motion, MotionConfig } from 'framer-motion';
 import { SPECIALISTS_DATA } from '@/data/salonData';
+import { fadeIn, fadeInUp, scaleIn, staggerContainer } from '@/lib/animationVariants';
 
 const InstagramIcon = (props: React.SVGProps<SVGSVGElement>) => (
   <svg
@@ -54,119 +55,108 @@ const TwitterIcon = (props: React.SVGProps<SVGSVGElement>) => (
 );
 
 export default function Specialists() {
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.2,
-      },
-    },
-  };
-
-  const cardVariants = {
-    hidden: { opacity: 0, y: 40 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] as any },
-    },
-  };
-
   return (
-    <section id="specialists" className="py-28 bg-aura-bg relative">
-      <div className="max-w-7xl mx-auto px-6 md:px-12">
-        
-        {/* Header Block */}
-        <div className="text-center max-w-2xl mx-auto mb-20 flex flex-col items-center">
-          <span className="text-xs font-semibold tracking-[0.2em] text-aura-accent uppercase mb-2">Our Artisans</span>
-          <h2 className="text-3xl md:text-4xl font-serif text-aura-text">
-            Meet Our Master Specialists
-          </h2>
-          <div className="h-[2px] w-12 bg-aura-accent my-4"></div>
-          <p className="text-sm md:text-base text-aura-muted font-light leading-relaxed">
-            Our certified therapists and artistic directors bring world-class training and a nurturing touch to every treatment.
-          </p>
+    <MotionConfig reducedMotion="user">
+      <section id="specialists" className="py-28 bg-aura-bg relative">
+        <div className="max-w-7xl mx-auto px-6 md:px-12">
+          
+          {/* Header Block */}
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: '-50px' }}
+            variants={fadeInUp}
+            className="text-center max-w-2xl mx-auto mb-20 flex flex-col items-center"
+          >
+            <span className="text-xs font-semibold tracking-[0.2em] text-aura-accent uppercase mb-2">Our Artisans</span>
+            <h2 className="text-3xl md:text-4xl font-serif text-aura-text">
+              Meet Our Master Specialists
+            </h2>
+            <div className="h-[2px] w-12 bg-aura-accent my-4"></div>
+            <p className="text-sm md:text-base text-aura-muted font-light leading-relaxed">
+              Our certified therapists and artistic directors bring world-class training and a nurturing touch to every treatment.
+            </p>
+          </motion.div>
+
+          {/* Specialists Cards Grid */}
+          <motion.div
+            variants={staggerContainer}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: '-50px' }}
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+          >
+            {SPECIALISTS_DATA.map((specialist) => (
+              <motion.div
+                variants={fadeInUp}
+                key={specialist.id}
+                className="bg-white rounded-[20px] overflow-hidden border border-aura-border group shadow-premium hover:-translate-y-1 hover:shadow-premium-hover transition-all duration-300"
+              >
+                {/* Image Container with Hover Social Drawer */}
+                <motion.div variants={scaleIn} className="relative aspect-[3/4] w-full overflow-hidden bg-aura-bg">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={specialist.photo}
+                    alt={specialist.name}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 brightness-[1.03] saturate-[1.04] contrast-[1.02]"
+                  />
+                  
+                  {/* Floating Social Icons Drawer on Hover */}
+                  <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center space-x-4 z-10">
+                    {specialist.socials.instagram && (
+                      <a
+                        href={specialist.socials.instagram}
+                        className="p-3 rounded-full bg-white text-aura-text hover:bg-aura-accent hover:text-white transition-colors duration-300 shadow-sm"
+                        aria-label="Instagram Link"
+                      >
+                        <InstagramIcon className="w-4 h-4" />
+                      </a>
+                    )}
+                    {specialist.socials.facebook && (
+                      <a
+                        href={specialist.socials.facebook}
+                        className="p-3 rounded-full bg-white text-aura-text hover:bg-aura-accent hover:text-white transition-colors duration-300 shadow-sm"
+                        aria-label="Facebook Link"
+                      >
+                        <FacebookIcon className="w-4 h-4" />
+                      </a>
+                    )}
+                    {specialist.socials.twitter && (
+                      <a
+                        href={specialist.socials.twitter}
+                        className="p-3 rounded-full bg-white text-aura-text hover:bg-aura-accent hover:text-white transition-colors duration-300 shadow-sm"
+                        aria-label="Twitter Link"
+                      >
+                        <TwitterIcon className="w-4 h-4" />
+                      </a>
+                    )}
+                  </div>
+                </motion.div>
+
+                {/* Specialist Meta details */}
+                <motion.div variants={fadeIn} className="p-6 text-center space-y-4">
+                  <div className="space-y-1">
+                    <h3 className="font-serif text-xl text-aura-text">{specialist.name}</h3>
+                    <p className="text-xs text-aura-accent uppercase tracking-widest font-semibold">{specialist.role}</p>
+                  </div>
+                  
+                  <div className="h-[1px] bg-aura-border w-1/2 mx-auto" />
+
+                  <div className="space-y-2 text-xs text-aura-muted font-light leading-relaxed">
+                    <p>
+                      <span className="font-semibold text-aura-text">Experience:</span> {specialist.experience}
+                    </p>
+                    <p className="px-4">
+                      <span className="font-semibold text-aura-text">Expertise:</span> {specialist.specialization}
+                    </p>
+                  </div>
+                </motion.div>
+              </motion.div>
+            ))}
+          </motion.div>
+
         </div>
-
-        {/* Specialists Cards Grid */}
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: '-50px' }}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
-        >
-          {SPECIALISTS_DATA.map((specialist) => (
-            <motion.div
-              variants={cardVariants}
-              key={specialist.id}
-              className="bg-white rounded-[20px] overflow-hidden border border-aura-border group shadow-premium hover:-translate-y-1 hover:shadow-premium-hover transition-all duration-300"
-            >
-              {/* Image Container with Hover Social Drawer */}
-              <div className="relative aspect-[3/4] w-full overflow-hidden bg-aura-bg">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src={specialist.photo}
-                  alt={specialist.name}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 brightness-[1.03] saturate-[1.04] contrast-[1.02]"
-                />
-                
-                {/* Floating Social Icons Drawer on Hover */}
-                <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center space-x-4 z-10">
-                  {specialist.socials.instagram && (
-                    <a
-                      href={specialist.socials.instagram}
-                      className="p-3 rounded-full bg-white text-aura-text hover:bg-aura-accent hover:text-white transition-colors duration-300 shadow-sm"
-                      aria-label="Instagram Link"
-                    >
-                      <InstagramIcon className="w-4 h-4" />
-                    </a>
-                  )}
-                  {specialist.socials.facebook && (
-                    <a
-                      href={specialist.socials.facebook}
-                      className="p-3 rounded-full bg-white text-aura-text hover:bg-aura-accent hover:text-white transition-colors duration-300 shadow-sm"
-                      aria-label="Facebook Link"
-                    >
-                      <FacebookIcon className="w-4 h-4" />
-                    </a>
-                  )}
-                  {specialist.socials.twitter && (
-                    <a
-                      href={specialist.socials.twitter}
-                      className="p-3 rounded-full bg-white text-aura-text hover:bg-aura-accent hover:text-white transition-colors duration-300 shadow-sm"
-                      aria-label="Twitter Link"
-                    >
-                      <TwitterIcon className="w-4 h-4" />
-                    </a>
-                  )}
-                </div>
-              </div>
-
-              {/* Specialist Meta details */}
-              <div className="p-6 text-center space-y-4">
-                <div className="space-y-1">
-                  <h3 className="font-serif text-xl text-aura-text">{specialist.name}</h3>
-                  <p className="text-xs text-aura-accent uppercase tracking-widest font-semibold">{specialist.role}</p>
-                </div>
-                
-                <div className="h-[1px] bg-aura-border w-1/2 mx-auto" />
-
-                <div className="space-y-2 text-xs text-aura-muted font-light leading-relaxed">
-                  <p>
-                    <span className="font-semibold text-aura-text">Experience:</span> {specialist.experience}
-                  </p>
-                  <p className="px-4">
-                    <span className="font-semibold text-aura-text">Expertise:</span> {specialist.specialization}
-                  </p>
-                </div>
-              </div>
-            </motion.div>
-          ))}
-        </motion.div>
-
-      </div>
-    </section>
+      </section>
+    </MotionConfig>
   );
 }

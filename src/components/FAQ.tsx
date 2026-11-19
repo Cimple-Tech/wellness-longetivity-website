@@ -1,9 +1,10 @@
 'use client';
 
 import { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, MotionConfig } from 'framer-motion';
 import { Plus, Minus } from 'lucide-react';
 import { FAQ_DATA } from '@/data/salonData';
+import { fadeIn, staggerContainer } from '@/lib/animationVariants';
 
 export default function FAQ() {
   const [openId, setOpenId] = useState<string | null>('faq-1'); // Keep first item open by default
@@ -13,68 +14,82 @@ export default function FAQ() {
   };
 
   return (
-    <section id="faq" className="py-28 bg-aura-bg-alt relative">
-      <div className="max-w-4xl mx-auto px-6 md:px-12">
-        
-        {/* Header Block */}
-        <div className="text-center max-w-2xl mx-auto mb-16 flex flex-col items-center">
-          <span className="text-xs font-semibold tracking-[0.2em] text-aura-accent uppercase mb-2">Help & Info</span>
-          <h2 className="text-3xl md:text-4xl font-serif text-aura-text">
-            Frequently Asked Questions
-          </h2>
-          <div className="h-[2px] w-12 bg-aura-accent my-4"></div>
-          <p className="text-sm md:text-base text-aura-muted font-light leading-relaxed">
-            Have questions about spa etiquette, policies, or treatment preparations? Read through our answers or contact our reception.
-          </p>
-        </div>
+    <MotionConfig reducedMotion="user">
+      <section id="faq" className="py-28 bg-aura-bg-alt relative">
+        <div className="max-w-4xl mx-auto px-6 md:px-12">
+          {/* Header Block */}
+          <motion.div
+            variants={fadeIn}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: '-50px' }}
+            className="text-center max-w-2xl mx-auto mb-16 flex flex-col items-center"
+          >
+            <span className="text-xs font-semibold tracking-[0.2em] text-aura-accent uppercase mb-2">
+              Help & Info
+            </span>
+            <h2 className="text-3xl md:text-4xl font-serif text-aura-text">
+              Frequently Asked Questions
+            </h2>
+            <div className="h-[2px] w-12 bg-aura-accent my-4" />
+            <p className="text-sm md:text-base text-aura-muted font-light leading-relaxed">
+              Have questions about spa etiquette, policies, or treatment preparations? Read through our answers or contact our reception.
+            </p>
+          </motion.div>
 
-        {/* FAQ Accordions List */}
-        <div className="space-y-4">
-          {FAQ_DATA.map((faq) => {
-            const isOpen = openId === faq.id;
-            return (
-              <div
-                key={faq.id}
-                                 className={`relative border rounded-[20px] overflow-hidden bg-white transition-all duration-[250ms] ease-out shadow-sm transform-gpu motion-safe:hover:scale-[1.02] hover:z-10 hover:shadow-[0_4px_12px_rgba(168,107,115,0.15),0_0_8px_rgba(168,107,115,0.25)] motion-reduce:transition-none ${
-                   isOpen ? 'border-aura-accent bg-white hover:border-aura-accent' : 'border-aura-border hover:border-aura-accent/60'
-                 }`}
-              >
-                {/* Header/Trigger Accordion */}
-                <button
-                  onClick={() => toggleFAQ(faq.id)}
-                  className="w-full flex items-center justify-between p-6 text-left focus:outline-none cursor-pointer"
+          {/* FAQ Accordions List */}
+          <motion.div
+            className="space-y-4"
+            variants={staggerContainer}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: '-50px' }}
+          >
+            {FAQ_DATA.map((faq) => {
+              const isOpen = openId === faq.id;
+              return (
+                <motion.div
+                  key={faq.id}
+                  variants={fadeIn}
+                  className={`relative border rounded-[20px] overflow-hidden bg-white transition-all duration-[250ms] ease-out shadow-sm transform-gpu motion-safe:hover:scale-[1.02] hover:z-10 hover:shadow-[0_4px_12px_rgba(168,107,115,0.15),0_0_8px_rgba(168,107,115,0.25)] motion-reduce:transition-none ${
+                    isOpen ? 'border-aura-accent bg-white hover:border-aura-accent' : 'border-aura-border hover:border-aura-accent/60'
+                  }`}
                 >
-                  <span className="font-serif text-base md:text-lg text-aura-text pr-4 leading-snug">
-                    {faq.question}
-                  </span>
-                  
-                  {/* +/- toggle icon */}
-                  <div className={`p-1.5 rounded-full flex-shrink-0 transition-colors ${isOpen ? 'bg-aura-accent text-white' : 'bg-aura-bg text-aura-muted'}`}>
-                    {isOpen ? <Minus className="w-3.5 h-3.5" /> : <Plus className="w-3.5 h-3.5" />}
-                  </div>
-                </button>
+                  {/* Header/Trigger Accordion */}
+                  <button
+                    onClick={() => toggleFAQ(faq.id)}
+                    className="w-full flex items-center justify-between p-6 text-left focus:outline-none cursor-pointer"
+                  >
+                    <span className="font-serif text-base md:text-lg text-aura-text pr-4 leading-snug">
+                      {faq.question}
+                    </span>
+                    {/* +/- toggle icon */}
+                    <div className={`p-1.5 rounded-full flex-shrink-0 transition-colors ${isOpen ? 'bg-aura-accent text-white' : 'bg-aura-bg text-aura-muted'}`}>
+                      {isOpen ? <Minus className="w-3.5 h-3.5" /> : <Plus className="w-3.5 h-3.5" />}
+                    </div>
+                  </button>
 
-                {/* Collapsible Content wrapper */}
-                <AnimatePresence initial={false}>
-                  {isOpen && (
-                    <motion.div
-                      initial={{ height: 0, opacity: 0 }}
-                      animate={{ height: 'auto', opacity: 1 }}
-                      exit={{ height: 0, opacity: 0 }}
-                      transition={{ duration: 0.3, ease: 'easeInOut' }}
-                    >
-                      <div className="px-6 pb-6 pt-0 border-t border-aura-border/40 text-xs md:text-sm text-aura-muted font-light leading-relaxed">
-                        {faq.answer}
-                      </div>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </div>
-            );
-          })}
+                  {/* Collapsible Content wrapper */}
+                  <AnimatePresence initial={false}>
+                    {isOpen && (
+                      <motion.div
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: 'auto', opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        transition={{ duration: 0.3, ease: 'easeInOut' }}
+                      >
+                        <div className="px-6 pb-6 pt-0 border-t border-aura-border/40 text-xs md:text-sm text-aura-muted font-light leading-relaxed">
+                          {faq.answer}
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </motion.div>
+              );
+            })}
+          </motion.div>
         </div>
-
-      </div>
-    </section>
+      </section>
+    </MotionConfig>
   );
 }
